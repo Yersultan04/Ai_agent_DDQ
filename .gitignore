@@ -10,3 +10,6 @@ dist/
 build/
 *.egg-info/
 node_modules/
+
+# Local SQLite DB
+prisma/dev.db
