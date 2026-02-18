@@ -76,9 +76,8 @@ Open `http://localhost:3000`.
 
 ## Current MVP constraints
 
-- Duplicate KB uploads are detected by SHA-256 and reused per project.
 - Retrieval is lexical scoring-based.
-- Best chunking support is for text-like files (`txt/md/json/xml/csv/yaml`).
+- Best chunking support is for text-like files (`txt/md/json/xml`).
 - Export supports `CSV` and `JSON` download endpoints.
 
 ## Backlog
