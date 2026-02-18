@@ -9,7 +9,15 @@ function csvEscape(v: unknown) {
   return s;
 }
 
-function computeStats(questions: Array<any>) {
+type ExportQuestion = {
+  answers?: Array<{
+    text?: string | null;
+    status?: "DRAFT" | "APPROVED" | null;
+    citations?: Array<unknown> | null;
+  }> | null;
+};
+
+function computeStats(questions: ExportQuestion[]) {
   const totalQuestions = questions.length;
   const answeredQuestions = questions.filter((q) => (q.answers?.[0]?.text ?? "").trim().length > 0).length;
   const approvedAnswers = questions.filter((q) => q.answers?.[0]?.status === "APPROVED").length;
@@ -91,12 +99,12 @@ export async function GET(req: Request, ctx: { params: Promise<{ projectId: stri
     await prisma.export.create({
       data: {
         projectId,
-        format: formatEnum as any,
+        format: formatEnum,
         filePath,
         statsJson: JSON.stringify(stats),
       },
     });
-  } catch (e) {
+  } catch {
     // ignore
   }
 
