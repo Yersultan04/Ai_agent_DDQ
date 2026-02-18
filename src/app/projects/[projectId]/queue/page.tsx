@@ -48,6 +48,7 @@ export default async function QueuePage({
         </div>
 
         <div className="flex gap-2">
+          <RunAgentButton projectId={projectId} />
           <Link href={`/projects/${projectId}`} className="rounded-md border px-4 py-2">
             Overview
           </Link>
