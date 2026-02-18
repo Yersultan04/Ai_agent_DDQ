@@ -1,0 +1,9 @@
+Encryption at Rest Policy
+- All customer data stored in PostgreSQL is encrypted at rest using AES-256.
+- Keys are managed via a dedicated KMS with rotation at least every 12 months.
+- Backups are encrypted at rest with AES-256 and access is restricted by least privilege.
+Single Sign-On (SSO)
+- We support SAML 2.0 for enterprise SSO.
+- Optional OIDC is available for selected integrations.
+Incident Response
+- 24/7 on-call. Customer notification within 72 hours for confirmed incidents impacting data confidentiality.

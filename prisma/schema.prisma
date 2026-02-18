@@ -1,0 +1,252 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+enum ProjectType {
+  DDQ
+  RFP
+  SECURITY_QUESTIONNAIRE
+}
+
+enum AnswerType {
+  TEXT
+  YESNO
+  MULTI
+}
+
+enum QuestionStatus {
+  UNANSWERED
+  DRAFTED
+  NEEDS_REVIEW
+  APPROVED
+  GAP
+  CONFLICT
+}
+
+enum ConfidenceLevel {
+  UNKNOWN
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum AgentName {
+  AnswerEvidence
+  ReviewExport
+}
+
+enum AgentRunStatus {
+  RUNNING
+  DONE
+  FAILED
+}
+
+enum ActorType {
+  AGENT
+  USER
+}
+
+enum AnswerLifecycleStatus {
+  DRAFT
+  APPROVED
+}
+
+enum ExportFormat {
+  CSV
+  JSON
+  DOCX
+}
+
+model Project {
+  id           String      @id @default(cuid())
+  name         String
+  type         ProjectType @default(SECURITY_QUESTIONNAIRE)
+  clientName   String?
+  evidenceOnly Boolean     @default(true)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  questionnaireFiles QuestionnaireFile[]
+  questions          Question[]
+  knowledgeDocuments KnowledgeDocument[]
+  chunks             DocumentChunk[]
+  answers            Answer[]
+  agentRuns           AgentRun[]
+  activityLogs        ActivityLog[]
+  exports             Export[]
+}
+
+model QuestionnaireFile {
+  id          String  @id @default(cuid())
+  projectId   String
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  filename    String
+  mimeType    String
+  storagePath String
+
+  uploadedAt  DateTime @default(now())
+
+  @@index([projectId])
+}
+
+model Question {
+  id         String  @id @default(cuid())
+  projectId  String
+  project    Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  externalId String?
+  number     Int?
+  section    String?
+  text       String
+
+  answerType  AnswerType @default(TEXT)
+  optionsJson String?
+
+  status     QuestionStatus   @default(UNANSWERED)
+  owner      String?
+  confidence ConfidenceLevel  @default(UNKNOWN)
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  answers      Answer[]
+  activityLogs ActivityLog[]
+
+  @@index([projectId, status])
+  @@index([projectId, confidence])
+}
+
+model KnowledgeDocument {
+  id          String  @id @default(cuid())
+  projectId   String
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  title       String?
+  filename    String
+  mimeType    String
+  storagePath String
+  sha256      String?
+
+  uploadedAt  DateTime @default(now())
+
+  chunks      DocumentChunk[]
+
+  @@index([projectId])
+  @@index([projectId, sha256])
+}
+
+model DocumentChunk {
+  id          String  @id @default(cuid())
+  projectId   String
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  documentId  String
+  document    KnowledgeDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  chunkIndex  Int
+  text        String
+  sourceRef   String?
+  tokenCount  Int?
+
+  citations   Citation[]
+
+  @@unique([documentId, chunkIndex])
+  @@index([projectId])
+  @@index([documentId])
+}
+
+model Answer {
+  id          String  @id @default(cuid())
+  projectId   String
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  questionId  String
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  text        String
+  status      AnswerLifecycleStatus @default(DRAFT)
+  createdBy   ActorType @default(AGENT)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  citations   Citation[]
+
+  @@index([projectId])
+  @@index([questionId])
+}
+
+model Citation {
+  id             String @id @default(cuid())
+  answerId       String
+  answer         Answer @relation(fields: [answerId], references: [id], onDelete: Cascade)
+
+  chunkId        String
+  chunk          DocumentChunk @relation(fields: [chunkId], references: [id], onDelete: Cascade)
+
+  snippet        String
+  relevanceScore Float?
+
+  startOffset    Int?
+  endOffset      Int?
+
+  @@index([answerId])
+  @@index([chunkId])
+}
+
+model AgentRun {
+  id         String  @id @default(cuid())
+  projectId  String
+  project    Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  agentName  AgentName
+  status     AgentRunStatus @default(RUNNING)
+  progress   Int            @default(0)
+
+  startedAt  DateTime @default(now())
+  finishedAt DateTime?
+
+  metaJson   String?
+
+  @@index([projectId, agentName])
+  @@index([projectId, status])
+}
+
+model ActivityLog {
+  id         String  @id @default(cuid())
+  projectId  String
+  project    Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  questionId String?
+  question   Question? @relation(fields: [questionId], references: [id], onDelete: SetNull)
+
+  actor      ActorType
+  message    String
+
+  createdAt  DateTime @default(now())
+
+  @@index([projectId])
+  @@index([questionId])
+}
+
+model Export {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  format    ExportFormat @default(CSV)
+  filePath  String
+
+  createdAt DateTime @default(now())
+  statsJson String?
+
+  @@index([projectId])
+}

@@ -1,0 +1,107 @@
+[00:00:02.300] Server  LOG     ✓ Ready in 1673ms
+[00:00:12.671] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:20.891] Browser ERROR   Each child in a list should have a unique "key" prop.%s%s See https://react.dev/link/warning-keys for more information. 
+
+Check the render method of `QuestionDetailPage`. 
+[00:00:22.218] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:36.753] Server  LOG     ✓ Compiled in 201ms
+[00:05:55.635] Server  LOG     ✓ Compiled in 128ms
+[00:06:17.590] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:18.069] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:18.618] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:18.876] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:19.115] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:19.722] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:20.174] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:20.526] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:20.828] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:21.049] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:21.245] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:21.448] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:21.655] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:21.841] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:22.081] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:22.268] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:22.452] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:22.646] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:22.868] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:23.073] Server  ERROR   ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:06:23.521] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:06:23.864] Browser ERROR   uncaughtError: Error: Event handlers cannot be passed to Client Component props.
+  <form action=... method="post" onSubmit={function onSubmit} children=...>
+                                          ^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+[00:08:02.054] Server  LOG     ✓ Compiled in 114ms
+[00:08:04.141] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:08:14.890] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:08:15.375] Browser ERROR   Each child in a list should have a unique "key" prop.%s%s See https://react.dev/link/warning-keys for more information. 
+
+Check the render method of `QuestionDetailPage`. 
+[00:13:25.825] Server  LOG     ✓ Compiled in 259ms
+[00:13:31.892] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:39:08.182] Server  LOG     ✓ Compiled in 179ms
+[01:39:20.811] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:39:42.984] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:39:44.280] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:39:46.227] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[25:05:19.470] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
