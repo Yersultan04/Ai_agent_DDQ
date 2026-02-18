@@ -169,8 +169,9 @@ Draft response (edit as needed):
       await prisma.question.update({ where: { id: q.id }, data: { status: "DRAFTED" } });
 
       drafted += 1;
-    } catch (e: any) {
-      errors.push({ questionId: q.id, error: e?.message ?? String(e) });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      errors.push({ questionId: q.id, error: message });
     }
   }
 

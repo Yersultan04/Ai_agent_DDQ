@@ -104,7 +104,11 @@ export async function PATCH(
   }
 
   // allow updating: status, owner, confidence
-  const data: any = {};
+  const data: {
+    status?: string;
+    owner?: string | null;
+    confidence?: string;
+  } = {};
   if (typeof body.status === "string") data.status = body.status;
   if (typeof body.owner === "string" || body.owner === null) data.owner = body.owner;
   if (typeof body.confidence === "string") data.confidence = body.confidence;

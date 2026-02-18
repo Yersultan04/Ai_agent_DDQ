@@ -25,8 +25,8 @@ export default function RunAgentButton({ projectId }: { projectId: string }) {
 
       setMsg("Done");
       router.refresh();
-    } catch (e: any) {
-      setMsg(e?.message ?? "Failed");
+    } catch (error: unknown) {
+      setMsg(error instanceof Error ? error.message : "Failed");
     } finally {
       setLoading(false);
     }
