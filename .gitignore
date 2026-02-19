@@ -16,3 +16,6 @@ prisma/dev.db
 
 # Allow env example file
 !.env.example
+
+# Next.js build output
+.next/

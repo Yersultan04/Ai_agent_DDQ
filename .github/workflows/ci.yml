@@ -45,7 +45,3 @@ jobs:
 
       - name: Smoke e2e
         run: npm run smoke:e2e
-
-      - name: Smoke failed - print dev log
-        if: failure()
-        run: cat /tmp/ddq-dev.log || true
