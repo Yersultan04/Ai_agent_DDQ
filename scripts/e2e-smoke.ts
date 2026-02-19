@@ -6,8 +6,6 @@ const baseUrl = process.env.SMOKE_BASE_URL ?? "http://127.0.0.1:3000";
 
 type ProjectCreateResponse = { id: string };
 type QueueItem = { id: string; status: string };
-type RunCreateResponse = { runId: string };
-type RunStatusResponse = { status: "RUNNING" | "DONE" | "FAILED"; progress: number; meta?: unknown };
 type QuestionResponse = {
   question: { id: string };
   answer: { id: string; text: string } | null;
@@ -21,26 +19,6 @@ async function mustJson<T>(res: Response, label: string): Promise<T> {
   return (await res.json()) as T;
 }
 
-
-async function waitForRun(baseUrl: string, runId: string, timeoutMs = 90000) {
-  const started = Date.now();
-
-  while (Date.now() - started < timeoutMs) {
-    const status = await mustJson<RunStatusResponse>(
-      await fetch(`${baseUrl}/api/agent-runs/${runId}`, { cache: "no-store" }),
-      "fetch run status"
-    );
-
-    if (status.status === "DONE") return status;
-    if (status.status === "FAILED") {
-      throw new Error(`Run failed: ${JSON.stringify(status.meta ?? {})}`);
-    }
-
-    await new Promise((r) => setTimeout(r, 800));
-  }
-
-  throw new Error("Timed out waiting for run completion");
-}
 async function run() {
   const runId = Date.now();
 
@@ -87,16 +65,14 @@ async function run() {
     "upload kb"
   );
 
-  const runCreate = await mustJson<RunCreateResponse>(
+  await mustJson<{ ok: boolean }>(
     await fetch(`${baseUrl}/api/projects/${project.id}/run`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ topK: 5, includeDrafted: false }),
     }),
-    "queue run agent"
+    "run agent"
   );
-
-  await waitForRun(baseUrl, runCreate.runId);
 
   const queue = await mustJson<QueueItem[]>(
     await fetch(`${baseUrl}/api/projects/${project.id}/queue`, { cache: "no-store" }),

@@ -74,32 +74,10 @@ Open `http://localhost:3000`.
 > `smoke:e2e` expects running app at `http://127.0.0.1:3000` by default.
 > Override with `SMOKE_BASE_URL`.
 
-## Agent run orchestration
-
-Agent runs are now asynchronous:
-
-- `POST /api/projects/:projectId/run` enqueues an `AgentRun` and returns `runId`
-- `GET /api/agent-runs/:runId` returns progress/status (`RUNNING`/`DONE`/`FAILED`)
-- Queue UI polls run status and refreshes data when run is complete
-
-## Agent generation mode
-
-`/api/projects/:projectId/run` now supports provider-based generation:
-
-- `AGENT_PROVIDER=local` (default): deterministic local template draft with evidence bullets
-- `AGENT_PROVIDER=openai`: uses OpenAI Chat Completions with evidence-grounded prompt
-
-Environment variables:
-
-- `AGENT_PROVIDER`
-- `OPENAI_API_KEY` (required for openai)
-- `OPENAI_MODEL` (optional, default: `gpt-4o-mini`)
-
 ## Current MVP constraints
 
-- Duplicate KB uploads are detected by SHA-256 and reused per project.
 - Retrieval is lexical scoring-based.
-- Best chunking support is for text-like files (`txt/md/json/xml/csv/yaml`).
+- Best chunking support is for text-like files (`txt/md/json/xml`).
 - Export supports `CSV` and `JSON` download endpoints.
 
 ## Backlog
