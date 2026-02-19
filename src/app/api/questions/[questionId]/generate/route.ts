@@ -7,7 +7,7 @@ type GenerateBody = {
   mode?: "draft" | "approve";
 };
 
-function buildDraftAnswer(questionText: string) {
+function buildDraftAnswer() {
   // MVP stub (позже заменим на LLM + retrieval)
   return `Draft answer (MVP):\n\nWe encrypt data at rest using industry-standard encryption (e.g., AES-256) where applicable. Access to encryption keys is restricted and managed via role-based access controls. Further details can be provided upon request.`;
 }
@@ -52,7 +52,7 @@ export async function POST(
     },
   });
 
-  const answerText = buildDraftAnswer(question.text);
+  const answerText = buildDraftAnswer();
 
   // Create Answer
   const answer = await prisma.answer.create({

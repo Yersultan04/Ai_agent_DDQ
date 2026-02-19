@@ -3,6 +3,25 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+type RunResponse = { runId: string };
+type RunStatus = { status: "RUNNING" | "DONE" | "FAILED"; progress: number };
+
+async function waitForRun(runId: string, timeoutMs = 90_000): Promise<RunStatus> {
+  const started = Date.now();
+
+  while (Date.now() - started < timeoutMs) {
+    const res = await fetch(`/api/agent-runs/${runId}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`Failed to fetch run status (${res.status})`);
+
+    const json = (await res.json()) as RunStatus;
+    if (json.status === "DONE" || json.status === "FAILED") return json;
+
+    await new Promise((r) => setTimeout(r, 800));
+  }
+
+  throw new Error("Run timed out");
+}
+
 export default function RunAgentButton({ projectId }: { projectId: string }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -11,7 +30,7 @@ export default function RunAgentButton({ projectId }: { projectId: string }) {
   async function run() {
     if (loading) return;
     setLoading(true);
-    setMsg(null);
+    setMsg("Queued...");
 
     try {
       const res = await fetch(`/api/projects/${projectId}/run`, {
@@ -20,13 +39,15 @@ export default function RunAgentButton({ projectId }: { projectId: string }) {
         body: JSON.stringify({ topK: 5, includeDrafted: false }),
       });
 
-      const text = await res.text();
-      if (!res.ok) throw new Error(text || `HTTP ${res.status}`);
+      const json = (await res.json()) as RunResponse;
+      if (!res.ok || !json?.runId) throw new Error(`Failed to queue run (${res.status})`);
 
-      setMsg("Done");
+      setMsg("Running...");
+      const finalStatus = await waitForRun(json.runId);
+      setMsg(finalStatus.status === "DONE" ? "Done" : "Failed");
       router.refresh();
-    } catch (e: any) {
-      setMsg(e?.message ?? "Failed");
+    } catch (error: unknown) {
+      setMsg(error instanceof Error ? error.message : "Failed");
     } finally {
       setLoading(false);
     }

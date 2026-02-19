@@ -66,10 +66,10 @@ export function Uploader({ projectId }: { projectId: string }) {
           type="file"
           onChange={(e) => setFile(e.target.files?.[0] ?? null)}
           className="block w-full text-sm"
-          accept=".txt,.md,.json,.xml"
+          accept=".txt,.md,.json,.xml,.csv,.yaml,.yml"
         />
         <div className="text-xs text-muted-foreground">
-          MVP: chunking works for text-like files (txt/md/json/xml). You can still upload other files, but they won’t be chunked yet.
+          MVP: chunking works for text-like files (txt/md/json/xml/csv/yaml). Duplicate files are auto-detected by SHA-256.
         </div>
       </div>
 
