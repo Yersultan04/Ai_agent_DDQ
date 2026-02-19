@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db/prisma";
 import { pickBestSnippets, scoreChunk } from "@/lib/retrieval/rank";
+import { generateDraftAnswer } from "@/lib/agent/generate";
 
 export const runtime = "nodejs";
 
@@ -132,19 +133,14 @@ export async function POST(req: Request, ctx: { params: Promise<{ projectId: str
         continue;
       }
 
-      const bullets = ranked.map((r, i) => {
-        const doc = r.documentTitle ?? r.filename ?? "Document";
-        const ref = r.sourceRef ? ` (${r.sourceRef})` : "";
-        return `- Evidence ${i + 1}: ${doc}${ref}`;
+      const draftText = await generateDraftAnswer({
+        question: q.text,
+        evidence: ranked.map((r) => ({
+          documentTitle: r.documentTitle ?? r.filename ?? "Document",
+          sourceRef: r.sourceRef,
+          snippet: pickBestSnippets(r.text, 220),
+        })),
       });
-
-      const draftText =
-`Based on the uploaded documentation, here is the current evidence:
-
-${bullets.join("\n")}
-
-Draft response (edit as needed):
-[Write a concise, audit-friendly answer here referencing the evidence above.]`;
 
       const answer = await upsertAnswerByQuestionId({
         projectId: q.projectId,
@@ -169,8 +165,9 @@ Draft response (edit as needed):
       await prisma.question.update({ where: { id: q.id }, data: { status: "DRAFTED" } });
 
       drafted += 1;
-    } catch (e: any) {
-      errors.push({ questionId: q.id, error: e?.message ?? String(e) });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      errors.push({ questionId: q.id, error: message });
     }
   }
 
